@@ -21,14 +21,6 @@ const affiliateProfileSchema = new Schema({
         type: Boolean,
         default: true
     },
-    plan: {
-        type: String,
-        default: "Free"
-    },
-    expirationDate: {
-        type: Date,
-        default: dt
-    }
 })
 
 const affiliateProfile = mongoose.model('affiliateProfile', affiliateProfileSchema)

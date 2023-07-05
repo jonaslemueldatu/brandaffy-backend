@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const affiliateProfile = require('../model/affiliateProfile')
+const subscriptionData = require('../model/subscriptionData')
+const jwt = require('jsonwebtoken')
+
 
 router.post('/', (req, res) => {
     affiliateProfile.findOne({ email: req.body.email }).then((data) => {
@@ -19,10 +22,20 @@ router.post('/', (req, res) => {
                 platform: req.body.platform
             })
 
-            newaffiliateProfile.save().then(
+            const newsubscriptionData = new subscriptionData({
+                email: req.body.email
+            })
+            const token = jwt.sign({ email: req.body.email }, 'topulchraes', { expiresIn: "1h" });
+
+            newaffiliateProfile.save()
+            newsubscriptionData.save().then(
                 res.status(200),
                 res.json({
-                    msg: "Registration successful!"
+                    msg: "Registration successful!",
+                    token: token,
+                    user_profile: {
+                        email: req.body.email
+                    }
                 })
             )
         }

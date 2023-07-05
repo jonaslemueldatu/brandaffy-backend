@@ -4,16 +4,20 @@ const mongoose = require('mongoose')
 const affiliateProfile = require('../model/affiliateProfile')
 
 router.get('/', (req, res) => {
-    console.log(req.query.email)
     affiliateProfile.findOne({ email: req.query.email }).then((data) => {
         if (data) {
-            const date = new Date(data.birthdate)
+            let date = ""
+            if (data.birthdate) {
+                date = new Date(data.birthdate).toISOString().substring(0, 10);
+            } else {
+                date = ""
+            }
             res.status(200),
                 res.json({
                     user_profile: {
                         firstname: data.first_name,
                         lastname: data.last_name,
-                        birthdate: date.toISOString().substring(0, 10),
+                        birthdate: date,
                         email: data.email,
                         country: data.country,
                         province: data.province,

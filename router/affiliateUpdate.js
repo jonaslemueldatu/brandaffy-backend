@@ -5,7 +5,6 @@ const affiliateProfile = require('../model/affiliateProfile')
 
 
 router.post('/', (req, res) => {
-    console.log(req.body)
     affiliateProfile.findOne({ email: req.body.email }).then((data) => {
         if (data) {
             if (data.birthdate != req.body.birthdate) {
