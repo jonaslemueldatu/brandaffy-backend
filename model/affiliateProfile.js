@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 
+let dt = new Date();
+dt.setMonth(dt.getMonth() + 1)
+
 const Schema = mongoose.Schema;
 const affiliateProfileSchema = new Schema({
     first_name: String,
@@ -7,6 +10,9 @@ const affiliateProfileSchema = new Schema({
     email: String,
     password: String,
     platform: Array,
+    birthdate: Date,
+    province: String,
+    country: String,
     registerDate: {
         type: Date,
         default: Date.now
@@ -14,6 +20,14 @@ const affiliateProfileSchema = new Schema({
     logged_in: {
         type: Boolean,
         default: true
+    },
+    plan: {
+        type: String,
+        default: "Free"
+    },
+    expirationDate: {
+        type: Date,
+        default: dt
     }
 })
 
